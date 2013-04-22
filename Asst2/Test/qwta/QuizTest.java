@@ -28,11 +28,8 @@ public class QuizTest {
 		scoresheet = new Scoresheet(quizAvg, new Marksheet(new Student("student1"), course));
 	}
 	
-	/**
-	 * Question 1
-	 * 
-	 * 22 cases, omg
-	 * */
+	
+	// Question 1
 	// coverage of the three methods for computing a SummaryStatistic on a
 	// vector of integer scores
 	@Test
@@ -66,7 +63,7 @@ public class QuizTest {
 		assertEquals((Integer) (sum/NUMBERS_OF_ELEMENT), quizAvg.summariseScores(vector2));
 	}
 
-	// 1 c,d (none)integer values within the score vector
+	//include negative integer values in the score vector
 	@Test
 	public void testSummariseScoresMinusNumberAvg() {
 		quiz1 = new Quiz("quiz1", course, 5, SummaryStatistic.AVG_SCORE);
@@ -86,13 +83,13 @@ public class QuizTest {
 		assertEquals((Integer) 20, quiz1.summariseScores(vector1));
 	}
 
-	// none-interger
+	// none-integer
+	// string
 	@Test
 	public void testSummariseScoresMoreNoneIntegerElementAvg() {
 		quiz1 = new Quiz("quiz1", course, 5, SummaryStatistic.AVG_SCORE);
 		Vector vector2 = new Vector(vector1);
 		vector2.add("hello");
-		// cause a error: JAVA_TYPE_SAFETY_SUCCESSFUL_TEST UNVERIFIED_BUG
 		assertEquals((Integer) 20, quiz1.summariseScores(vector2));
 	}
 	@Test
@@ -103,6 +100,7 @@ public class QuizTest {
 		// cause a error: JAVA_TYPE_SAFETY_SUCCESSFUL_TEST UNVERIFIED_BUG
 		assertEquals((Integer) 30, quiz1.summariseScores(vector2));
 	}
+	// white space
 	@Test
 	public void testSummariseScoresMoreNoneIntegerElementLast() {
 		quiz1 = new Quiz("quiz1", course, 5, SummaryStatistic.LAST_SCORE);
@@ -110,23 +108,15 @@ public class QuizTest {
 		vector2.add(' ');
 		assertEquals((Integer) 20, quiz1.summariseScores(vector2));
 	}
-
 	// char
-	@Test
-	public void testSummariseScoresCharAvg() {
-		quiz1 = new Quiz("quiz1", course, 5, SummaryStatistic.AVG_SCORE);
-		Vector vector2 = new Vector(vector1);
-		vector2.add("hello");
-		assertEquals((Integer) 20, quiz1.summariseScores(vector2));
-	}
 	@Test
 	public void testSummariseScoresCharMax() {
 		quiz1 = new Quiz("quiz1", course, 5, SummaryStatistic.MAX_SCORE);
 		Vector vector2 = new Vector(vector1);
 		vector2.add('a');
-		// cause a error: JAVA_TYPE_SAFETY_SUCCESSFUL_TEST UNVERIFIED_BUG
 		assertEquals((Integer) 30, quiz1.summariseScores(vector2));
 	}
+	// new-line char
 	@Test
 	public void testSummariseScoresCharLast() {
 		quiz1 = new Quiz("quiz1", course, 5, SummaryStatistic.LAST_SCORE);
@@ -135,7 +125,7 @@ public class QuizTest {
 		assertEquals((Integer) 20, quiz1.summariseScores(vector2));
 	}
 
-	// none-interger, float number
+	// none-integer, floating number
 	@Test
 	public void testSummariseScoresFloatAvg() {
 		quiz1 = new Quiz("quiz1", course, 5, SummaryStatistic.AVG_SCORE);
@@ -161,7 +151,7 @@ public class QuizTest {
 		assertEquals((Integer) 30, quiz1.summariseScores(vector2));
 	}
 
-	// none-interger, float number
+	// none-interger, null 
 	@Test
 	public void testSummariseScoresNullAvg() {
 		quiz1 = new Quiz("quiz1", course, 5, SummaryStatistic.AVG_SCORE);
@@ -180,18 +170,16 @@ public class QuizTest {
 		vector1.add(null);
 		assertEquals((Integer) 20, quiz1.summariseScores(vector1));
 	}
-	/**
-	 * Question 2
-	 * 
-	 * */
 
+	// Question 2
+	// try to get report without any attempt
 	@Test 
 	public void testSitQuizAttemptZeroTimes(){
 		// not one time sitQuiz() executed
 		scoresheet.reportOnScoresForStudent();
 		scoresheet.reportScoresToInstructor();
 	}
-	
+	// try to get report without any attempt time limits
 	@Test
 	public void testSitQuizAttemptThreeTimes(){
 		// three times, within maxAttempts
@@ -202,11 +190,9 @@ public class QuizTest {
 		scoresheet.reportScoresToInstructor();
 	}
 	
-	// BUGFIX
 	// test more attempt than allowed 
 	@Test
 	public void testSitQuizAttemptBeyondLimitedTimes(){
-//		Scoresheet scoresheet= new Scoresheet(quizAvg, new Marksheet(new Student("student1"), course));
 		assertEquals(0, quizAvg.sitQuiz(scoresheet));
 		assertEquals(0, quizAvg.sitQuiz(scoresheet));
 		assertEquals(0, quizAvg.sitQuiz(scoresheet));
@@ -217,7 +203,7 @@ public class QuizTest {
 		scoresheet.reportOnScoresForStudent();
 		scoresheet.reportScoresToInstructor();
 	}
-	// 
+	// test null objects
 	@Test
 	public void testSitQuizWithNullStudent(){
 		Scoresheet scoresheet= new Scoresheet(quizAvg, new Marksheet(new Student(null), course));
@@ -237,7 +223,6 @@ public class QuizTest {
 //		scoresheet.reportScoresToInstructor();
 	}
 	
-	//@SuppressWarnings("deprecation")
 	@Test
 	public void testScaledMark() {
 		int maxScore = 10;		//highest value that QuestionMark will award to any student taking this quiz.
